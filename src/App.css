@@ -1,0 +1,690 @@
+.excel-shell {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  place-items: center;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 15% 15%, rgba(255, 206, 145, 0.42), transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(84, 185, 158, 0.33), transparent 50%),
+    linear-gradient(140deg, #f3f7f4 0%, #eaf2ff 100%);
+}
+
+.bg-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(6px);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.bg-orb-left {
+  width: 260px;
+  height: 260px;
+  top: -70px;
+  left: -70px;
+  background: radial-gradient(circle, rgba(255, 157, 80, 0.5) 0%, rgba(255, 157, 80, 0) 70%);
+}
+
+.bg-orb-right {
+  width: 320px;
+  height: 320px;
+  bottom: -120px;
+  right: -80px;
+  background: radial-gradient(circle, rgba(56, 150, 130, 0.48) 0%, rgba(56, 150, 130, 0) 70%);
+}
+
+.excel-card {
+  width: min(560px, 100%);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  box-shadow: 0 20px 44px rgba(29, 43, 57, 0.16);
+  padding: 30px;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+  animation: card-enter 380ms ease-out both;
+}
+
+.preview-card {
+  width: min(1400px, 97vw);
+  margin-top: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  box-shadow: 0 18px 34px rgba(29, 43, 57, 0.12);
+  padding: 16px;
+  position: relative;
+  z-index: 1;
+  animation: card-enter 420ms ease-out both;
+}
+
+.preview-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.preview-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.edit-hint {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3f607d;
+}
+
+.preview-head h2 {
+  margin: 0;
+  color: #16324e;
+  font-size: 1.15rem;
+}
+
+.row-count {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #24506f;
+  background: #e8f2f9;
+  border: 1px solid #d8e6f1;
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+
+.validation-count {
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+
+.validation-count.ok {
+  color: #126948;
+  background: #e8f8ef;
+  border: 1px solid #cbeed9;
+}
+
+.validation-count.error {
+  color: #9f1f43;
+  background: #fff1f4;
+  border: 1px solid #ffd4df;
+}
+
+.save-btn {
+  border: 1px solid #1b6484;
+  border-radius: 999px;
+  background: #f3fbff;
+  color: #12445c;
+  font-size: 0.83rem;
+  font-weight: 700;
+  padding: 6px 11px;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.save-btn:hover {
+  background: #e6f5fd;
+  transform: translateY(-1px);
+}
+
+.save-btn:focus-visible {
+  outline: 2px solid rgba(18, 68, 92, 0.28);
+  outline-offset: 1px;
+}
+
+.save-btn.db {
+  border-color: #1f7a4f;
+  background: #effcf4;
+  color: #185139;
+}
+
+.save-btn.db:hover {
+  background: #e2f8eb;
+}
+
+.save-btn.add {
+  border-color: #6d5fd2;
+  background: #f4f2ff;
+  color: #3e2f9f;
+}
+
+.save-btn.add:hover {
+  background: #ebe7ff;
+}
+
+.save-btn.sort {
+  border-color: #4f74a6;
+  background: #edf4ff;
+  color: #284d81;
+}
+
+.save-btn.sort:hover {
+  background: #e2ecfb;
+}
+
+.table-wrap {
+  overflow: auto;
+  max-height: 62vh;
+  border: 1px solid #d1deea;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.excel-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  min-width: 1200px;
+}
+
+.excel-table th,
+.excel-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 8px;
+  border-bottom: 1px solid #e8eef5;
+  border-right: 1px solid #eef3f8;
+  font-size: 0.9rem;
+  color: #23384d;
+}
+
+.excel-table th {
+  background: #eef5fb;
+  color: #1f3f5d;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.excel-table th.header-highlight-green {
+  background: #d7f5dc;
+  color: #14532d;
+}
+
+.excel-table tbody tr:nth-child(2n) {
+  background: #f9fcff;
+}
+
+.excel-table tbody tr.row-error td {
+  background: #fff1f5;
+}
+
+.excel-table tbody tr.row-error .row-index-cell {
+  background: #ffdce7;
+  color: #8d2847;
+}
+
+.row-index-header,
+.row-index-cell {
+  width: 54px;
+  min-width: 54px;
+  max-width: 54px;
+  text-align: center;
+  position: sticky;
+  left: 0;
+  z-index: 3;
+}
+
+.row-index-header {
+  background: #e4eef8;
+  color: #355271;
+}
+
+.row-index-cell {
+  background: #f1f6fb;
+  color: #4f647c;
+  font-weight: 700;
+}
+
+.row-action-header,
+.row-action-cell {
+  width: 104px;
+  min-width: 104px;
+  text-align: center;
+}
+
+.row-delete-btn {
+  border: 1px solid #d54a66;
+  border-radius: 999px;
+  background: #fff3f6;
+  color: #8d1f3d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.row-delete-btn:hover {
+  background: #ffe8ef;
+  transform: translateY(-1px);
+}
+
+.row-delete-btn:focus-visible {
+  outline: 2px solid rgba(141, 31, 61, 0.28);
+  outline-offset: 1px;
+}
+
+.table-cell-input {
+  box-sizing: border-box;
+  border: 1px solid #d8e5f0;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 7px 9px;
+  color: #203247;
+  font-size: 0.92rem;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+.table-cell-input:hover {
+  border-color: #b9d0e4;
+  background: #fbfdff;
+}
+
+.table-cell-input:focus-visible {
+  outline: none;
+  border-color: #158468;
+  box-shadow: 0 0 0 3px rgba(21, 132, 104, 0.15);
+  background: #ffffff;
+}
+
+.table-cell-input.input-readonly {
+  background: #f3f6fa;
+  border-color: #c8d4e1;
+  color: #4a5e73;
+  cursor: not-allowed;
+}
+
+.table-cell-input.input-readonly:focus-visible {
+  box-shadow: none;
+  border-color: #c8d4e1;
+}
+
+.table-cell-textarea {
+  resize: none;
+  min-height: 52px;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow: hidden;
+}
+
+.cell-error {
+  background: #ffecef;
+  box-shadow: inset 0 0 0 1px #e56b8f;
+}
+
+.input-error {
+  border-color: #cc214f;
+  background: #ffe7ee;
+  color: #7f1433;
+}
+
+.input-error:hover {
+  border-color: #cc214f;
+  background: #ffdfe9;
+}
+
+.input-error:focus-visible {
+  border-color: #cc214f;
+  box-shadow: 0 0 0 3px rgba(204, 33, 79, 0.25);
+}
+
+.chip {
+  margin: 0;
+  width: fit-content;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #124843;
+  background: rgba(66, 164, 143, 0.18);
+  border: 1px solid rgba(66, 164, 143, 0.28);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.excel-card h1 {
+  margin: 16px 0 8px;
+  font-size: clamp(1.9rem, 3.4vw, 2.55rem);
+  line-height: 1.1;
+  color: #15263c;
+}
+
+.subtitle {
+  margin: 0 0 22px;
+  color: #435467;
+  font-size: 0.98rem;
+}
+
+.upload-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.file-label {
+  display: inline-flex;
+  width: fit-content;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a3d5d;
+}
+
+.file-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px dashed #7b8ba0;
+  border-radius: 12px;
+  background: #f7fafc;
+  color: #23384d;
+  padding: 12px;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.file-input:hover {
+  border-color: #158468;
+}
+
+.file-input:focus-visible {
+  outline: none;
+  border-color: #158468;
+  box-shadow: 0 0 0 4px rgba(21, 132, 104, 0.18);
+}
+
+.file-meta {
+  margin-top: 16px;
+  background: #f2f8fb;
+  border: 1px solid #dbe8ef;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.meta-label {
+  font-weight: 700;
+  color: #2d445b;
+}
+
+.meta-value {
+  color: #294f68;
+  word-break: break-word;
+}
+
+.upload-btn {
+  margin-top: 18px;
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(110deg, #0e7e6a 0%, #0f5d8e 100%);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.upload-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 20px rgba(10, 90, 110, 0.24);
+}
+
+.upload-btn:focus-visible {
+  outline: 3px solid rgba(14, 126, 106, 0.35);
+  outline-offset: 2px;
+}
+
+.secondary-btn {
+  margin-top: 10px;
+  width: 100%;
+  border: 1px solid #2a6d8f;
+  border-radius: 12px;
+  color: #164c67;
+  background: #f1f9ff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 11px 16px;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.secondary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 16px rgba(22, 76, 103, 0.16);
+}
+
+.secondary-btn:focus-visible {
+  outline: 3px solid rgba(22, 76, 103, 0.25);
+  outline-offset: 2px;
+}
+
+.secondary-btn.list {
+  margin-top: 8px;
+  border-color: #5f6f8a;
+  color: #344860;
+  background: #f7f9fc;
+}
+
+.secondary-btn.list:hover {
+  box-shadow: 0 10px 16px rgba(53, 72, 96, 0.14);
+}
+
+.dataset-list-wrap {
+  margin-top: 14px;
+  border: 1px solid #dbe6ef;
+  border-radius: 12px;
+  background: #f8fbfe;
+  padding: 12px;
+}
+
+.dataset-list-wrap h3 {
+  margin: 0 0 8px;
+  font-size: 0.96rem;
+  color: #20415d;
+}
+
+.dataset-empty {
+  margin: 0;
+  color: #4d6176;
+  font-size: 0.9rem;
+}
+
+.dataset-search {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 0 10px;
+  border: 1px solid #cfdae6;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #26425a;
+  font-size: 0.9rem;
+  padding: 9px 10px;
+}
+
+.dataset-search:focus-visible {
+  outline: none;
+  border-color: #2a6d8f;
+  box-shadow: 0 0 0 3px rgba(42, 109, 143, 0.14);
+}
+
+.dataset-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.dataset-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e3ebf3;
+  border-radius: 10px;
+  padding: 6px;
+}
+
+.dataset-load-btn {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.dataset-load-btn:hover {
+  background: #f4f9fd;
+}
+
+.dataset-load-btn:focus-visible {
+  outline: 2px solid rgba(42, 109, 143, 0.35);
+  outline-offset: 1px;
+}
+
+.dataset-delete-btn {
+  border: 1px solid #cb4466;
+  border-radius: 8px;
+  background: #fff4f6;
+  color: #a72f4f;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.dataset-delete-btn:hover {
+  background: #ffe9ef;
+}
+
+.dataset-delete-btn:focus-visible {
+  outline: 2px solid rgba(167, 47, 79, 0.3);
+  outline-offset: 1px;
+}
+
+.dataset-name {
+  color: #203750;
+  font-weight: 700;
+  font-size: 0.88rem;
+  word-break: break-word;
+}
+
+.dataset-time {
+  color: #4f6278;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.status {
+  margin: 14px 0 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  min-height: 1.4em;
+}
+
+.status.idle {
+  color: #4b5d71;
+}
+
+.status.success {
+  color: #0a7b57;
+}
+
+.status.error {
+  color: #bc2f4f;
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .excel-shell {
+    padding: 14px;
+  }
+
+  .excel-card {
+    padding: 22px 16px;
+    border-radius: 18px;
+  }
+
+  .excel-card h1 {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .preview-card {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .preview-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .preview-meta {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .excel-table th,
+  .excel-table td {
+    padding: 9px 10px;
+    font-size: 0.88rem;
+  }
+
+  .dataset-list li {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dataset-load-btn {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dataset-delete-btn {
+    width: 100%;
+  }
+
+  .dataset-time {
+    white-space: normal;
+  }
+}
